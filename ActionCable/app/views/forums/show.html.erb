@@ -1,0 +1,19 @@
+<div class="col-md-12">
+  <div class="group">
+    <%= link_to("Edit", edit_forum_path(@forum), class: "btn btn-primary pull-right")%>
+  </div>
+  <h1><%= @forum.title %></h1>
+  <p><%= @forum.description %></p>
+  <hr>
+  <br>
+
+  <h2>Chat List</h2>
+  <div class="messages">
+    <%= render  @forum.messages %>
+  </div>
+  <br><br>
+  <form>
+    <label>Say something:</label><br>
+    <input type="text" data-behavior="forum_speaker">
+  </form>
+</div>

@@ -1,0 +1,8 @@
+<div class="col-md-12">
+    <div class="group">
+      <% if @post.editable_by? current_user %>
+        <%= link_to("Edit", edit_group_post_path(@group, @post), class: "btn btn-primary pull-right")%>
+      <% end %>
+    </div>
+    <h2><%= @post.content %></h2>  
+</div>
