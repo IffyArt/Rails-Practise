@@ -1,0 +1,24 @@
+<h1>User List</h1>
+<hr>
+<%= link_to  "new User", new_user_path %>
+<table>
+  <tr>
+    <th></th>
+    <th>Name</th>
+    <th></th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= image_tag user.image if user.image? %>
+        <br>
+        <%= image_tag user.image_url(:thumb) if user.image? %>
+      </td>
+      <td><%= link_to  user.name, user_path(user) %></td>
+      <td>
+          <%= link_to  "edit", edit_user_path(user) %>
+          <%= link_to "delete", user_path(user), method: "delete", data:{ confirm: "Are you sure?"} %>
+      </td>
+    </tr>
+  <% end %>
+</table>

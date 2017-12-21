@@ -1,0 +1,10 @@
+<%= simple_form_for user do |f| %>
+<%= f.input :name, label: "Name" %>
+　<%= f.input :image %> <!-- 上傳 -->
+  <% if user.image? %>
+  　<%= f.check_box :remove_image %> <!-- 刪除 -->
+  　<%= image_tag user.image%> <!-- 如果 user 已有圖片的話，就顯示 -->
+  <% end %>
+  <br>
+  <%= f.submit %>
+<% end %>
