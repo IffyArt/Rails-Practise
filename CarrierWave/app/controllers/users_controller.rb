@@ -30,6 +30,7 @@ class UsersController < ApplicationController
   end
   
   def show
+    @file_record = FileRecord.new
   end
   
   def destroy
@@ -38,9 +39,16 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def file
+    @file_record = FileRecord.new(params.require(:file_record).permit(:name, :user_id))
+    @file_record.save
+    render :show
+  end
+
   private
   def find_user
     @user = User.find_by(id: params[:id])
+    @file_records = FileRecord.where(user_id: params[:id])
   end
 
   def user_params

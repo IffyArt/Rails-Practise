@@ -1,7 +1,18 @@
 <center>
   <%= image_tag @user.image if @user.image? %><br>
   <%= @user.name %><br>
-  <!-- <a href=/@user.files><%= @user.files_identifier %></a> -->
-  <%= link_to  @user.files_identifier, @user.files.to_s, download: @user.files_identifier %>
+  <% if @user.files? %>
+    <%= link_to  @user.files_identifier, @user.files.to_s, download: @user.files_identifier %>
+  <% end %>
+  <hr>
+  <% @file_records.each do |file| %>
+    <%= link_to  file.name_identifier, file.name.to_s, download: file.name_identifier %><br>
+  <% end %>
+  <hr>
+  <%= simple_form_for @file_record, url: file_user_path, method: "post" do |f| %>
+    <%= f.input :user_id, :input_html => { :value => @user.id } %>
+    <%= f.input :name %>
+    <%= f.submit %>
+  <% end %>
   <%= link_to  "back", :back %>
 </center>
