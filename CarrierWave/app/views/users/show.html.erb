@@ -5,13 +5,27 @@
     <%= link_to  @user.files_identifier, @user.files.to_s, download: @user.files_identifier %>
   <% end %>
   <hr>
-  <% @file_records.each do |file| %>
-    <%= link_to  file.name_identifier, file.name.to_s, download: file.name_identifier %><br>
-  <% end %>
+  <table>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th></th>
+    </tr>
+    <% @file_records.each do |file| %>
+      <tr>
+        <td></td>
+        <td><%= link_to  file.name, edit_file_path(file) %></td>
+        <td>
+          <%= link_to "下載", file.path.to_s, download: file.path_identifier %>
+          <%= link_to "刪除", file_path(file), method: "delete", data:{ confirm: "Are you sure?"} %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
   <hr>
   <%= simple_form_for @file_record, url: file_user_path, method: "post" do |f| %>
-    <%= f.input :user_id, :input_html => { :value => @user.id } %>
-    <%= f.input :name %>
+    <%= f.text_field :user_id, :value => @user.id, readonly: true, hidden: true %>
+    <%= f.input :path, label: "檔案上傳：" %><br>
     <%= f.submit %>
   <% end %>
   <%= link_to  "back", :back %>

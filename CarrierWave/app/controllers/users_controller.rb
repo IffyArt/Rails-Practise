@@ -40,7 +40,9 @@ class UsersController < ApplicationController
   end
 
   def file
-    @file_record = FileRecord.new(params.require(:file_record).permit(:name, :user_id))
+    filename = params.require(:file_record).permit(:path)['path'].original_filename.split('.')[0]
+    @file_record = FileRecord.new(params.require(:file_record).permit(:path, :user_id))
+    @file_record.name = filename
     @file_record.save
     render :show
   end

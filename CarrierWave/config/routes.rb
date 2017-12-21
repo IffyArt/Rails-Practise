@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     member do
       post :file
     end
-  
   end 
+  resources :files, only: [:edit, :update, :destroy]
+  
 end

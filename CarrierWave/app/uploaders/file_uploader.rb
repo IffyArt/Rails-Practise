@@ -44,8 +44,8 @@ class FileUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
+  def filename
+    "#{Time.now.strftime("%Y%m%d_%H%M%S")}_#{original_filename}" if original_filename
+  end
 
 end
