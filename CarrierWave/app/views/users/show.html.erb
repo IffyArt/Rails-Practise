@@ -1,5 +1,7 @@
 <center>
   <%= image_tag @user.image if @user.image? %><br>
   <%= @user.name %><br>
+  <!-- <a href=/@user.files><%= @user.files_identifier %></a> -->
+  <%= link_to  @user.files_identifier, @user.files.to_s, download: @user.files_identifier %>
   <%= link_to  "back", :back %>
 </center>

@@ -44,6 +44,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :image, :image_cache, :remove_image)
+    params.require(:user).permit(:name, :image, :image_cache, :remove_image, :files, :files_cache, :remove_files)
   end
 end
