@@ -35,14 +35,13 @@ class UsersController < ApplicationController
   
   def destroy
     @user.destroy if @user
-    FileUtils.remove_dir("#{Rails.root}/public/uploads/user/image/#{@user.id}", :force => true)
+    FileUtils.remove_dir("#{Rails.root}/public/uploads/#{@user.id}-#{@user.name}", :force => true)
     redirect_to users_path
   end
 
   def file
-    filename = params.require(:file_record).permit(:path)['path'].original_filename.split('.')[0]
-    @file_record = FileRecord.new(params.require(:file_record).permit(:path, :user_id))
-    @file_record.name = filename
+    @file_record = FileRecord.new(params.require(:file_record).permit(:file, :user_id))
+    @file_record.name = params.require(:file_record).permit(:file)['file'].original_filename
     @file_record.save
     render :show
   end

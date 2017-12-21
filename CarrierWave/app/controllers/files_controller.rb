@@ -11,7 +11,7 @@ class FilesController < ApplicationController
   
   def destroy
     @file = FileRecord.find_by(id: params[:id])
-    FileUtils.rm("#{Rails.root}/public/uploads/file_record/path/#{@file.id}/#{@file.path_identifier}", :force => true)
+    FileUtils.rm("#{Rails.root}/public#{URI.decode(@file.file.to_s)}", :force => true)
     @file.destroy if @file
     redirect_to user_path(User.find_by(id: @file.user_id))
   end

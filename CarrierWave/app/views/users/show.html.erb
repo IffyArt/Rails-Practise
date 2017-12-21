@@ -14,9 +14,10 @@
     <% @file_records.each do |file| %>
       <tr>
         <td></td>
-        <td><%= link_to  file.name, edit_file_path(file) %></td>
+        <td><%= link_to  file.name, file.file.to_s %></td>
         <td>
-          <%= link_to "下載", file.path.to_s, download: file.path_identifier %>
+          <%= link_to "下載", file.file.to_s, download: file.file_identifier %>
+          <%= link_to "編輯", edit_file_path(file) %>
           <%= link_to "刪除", file_path(file), method: "delete", data:{ confirm: "Are you sure?"} %>
         </td>
       </tr>
@@ -25,8 +26,8 @@
   <hr>
   <%= simple_form_for @file_record, url: file_user_path, method: "post" do |f| %>
     <%= f.text_field :user_id, :value => @user.id, readonly: true, hidden: true %>
-    <%= f.input :path, label: "檔案上傳：" %><br>
+    <%= f.input :file, label: "檔案上傳：" %><br>
     <%= f.submit %>
   <% end %>
-  <%= link_to  "back", :back %>
+  <%= link_to  "back", "/" %>
 </center>

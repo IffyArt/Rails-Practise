@@ -1,4 +1,4 @@
 class FileRecord < ApplicationRecord
   belongs_to :user
-  mount_uploader :path, FileUploader
+  mount_uploader :file, FileUploader
 end
