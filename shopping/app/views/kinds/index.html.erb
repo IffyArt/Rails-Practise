@@ -1,0 +1,24 @@
+<div class="col-md-12">
+  <div class="group" align="right">
+    <%= link_to("New Product Kind", new_kind_path, class: "btn btn-primary") %>
+  </div>
+  <h1>Kind List</h1>
+
+  <table class="table table-hover">
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+    <% @kinds.each do |kind| %>
+      <tr>
+        <td width="70%"><%= kind.name %></td>
+        <td>
+          <% if kind.id != 1 %>
+            <%= link_to  "edit", edit_kind_path(kind) %>&nbsp;
+            <%= link_to "delete", kind_path(kind), method: "delete", data:{ confirm: "確定刪除嗎?\n會同時刪除此類別下的所有產品。"} %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

@@ -1,0 +1,25 @@
+<h1><%= @product.name %></h1>
+<%= image_tag @product.image.medium.url %>
+<p>
+    price:
+  <% if @product.discounted and @product.discounted_start_date < Time.now and @product.discounted_end_date > Time.now %>
+    $<%= Integer(@product.price*(@product.discounted/100)) %>&nbsp;<del>$<%= Integer(@product.price) %></del><br>
+    Discounted: <%= Integer(100-@product.discounted) %>% off
+  <% else %>
+    <%= Integer(@product.price) %>
+  <% end %>
+</p>
+<p>
+  Introduction:<br>
+  <%= simple_format(@product.content) %>
+</p>
+<hr>
+<p>
+  <h3>Pictures：</h3>
+  <% if @product.product_pictures.size != 0 %>
+    <% @product.product_pictures.each do |pic| %>
+      <%= image_tag pic.file.medium.url %>
+    <% end %>
+  <% end %>
+</p>
+<%= link_to  "Back", :back %>

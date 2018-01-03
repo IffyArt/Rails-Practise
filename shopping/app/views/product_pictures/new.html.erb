@@ -1,0 +1,22 @@
+<h1><%= @product.name %></h1>
+
+<%= simple_form_for @product_picture, url: product_product_pictures_path do |f| %>
+  <%= f.hidden_field :product_id, :value => @product.id  %>
+  <%= f.input :file, label: "圖片：" %>
+  <%= f.submit %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Picture</th>
+    <th></th>
+  </tr>
+  <% if @product.product_pictures.size != 0 %>
+    <% @product.product_pictures.each do |pic| %>
+      <tr>
+        <td><%= image_tag pic.file.medium.url %></td>
+        <td><%= link_to "delete", product_product_picture_path(@product, pic), method: "delete", data:{ confirm: "Are you sure?"} %></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

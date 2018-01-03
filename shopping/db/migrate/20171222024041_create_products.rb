@@ -9,7 +9,7 @@ class CreateProducts < ActiveRecord::Migration[5.1]
       t.integer :amount, null: false
       t.text :description, null: false
       t.text :content, null: false
-      t.string :kind_references
+      t.references :kind, foreign_key: true
 
       t.timestamps
     end
