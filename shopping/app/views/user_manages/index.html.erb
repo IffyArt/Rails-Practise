@@ -1,0 +1,23 @@
+<h1>User List</h1>
+<div class="collapse navbar-collapse">
+  <ul class="nav navbar-nav navbar-right">
+    <li><%= link_to  "產品管理", product_manages_path %></li>
+    <li><%= link_to  "訂單管理", orders_path %></li>
+  </ul>
+</div>
+<table class="table table-hover">
+  <tr>
+    <th>Name(NickName)</th>
+    <th>credit score</th>
+    <th>phone</th>
+    <th>memo</th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= link_to  "#{user.name}(#{user.nickname})", user_manage_path(user) %></td>
+      <td><%= user.credit_score %></td>
+      <td><%= user.phone %></td>
+      <td><%= user.phone_memo %></td>
+    </tr>
+  <% end %>
+</table>

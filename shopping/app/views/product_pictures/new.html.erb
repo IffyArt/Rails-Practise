@@ -1,22 +1,32 @@
-<h1><%= @product.name %></h1>
+<% if current_user and current_user.is_admin %>
+  <h1><%= @product.name %> <%= link_to  "back", product_manages_path, class: "btn btn-default" %></h1>
 
-<%= simple_form_for @product_picture, url: product_product_pictures_path do |f| %>
-  <%= f.hidden_field :product_id, :value => @product.id  %>
-  <%= f.input :file, label: "圖片：" %>
-  <%= f.submit %>
-<% end %>
-
-<table>
-  <tr>
-    <th>Picture</th>
-    <th></th>
-  </tr>
-  <% if @product.product_pictures.size != 0 %>
-    <% @product.product_pictures.each do |pic| %>
-      <tr>
-        <td><%= image_tag pic.file.medium.url %></td>
-        <td><%= link_to "delete", product_product_picture_path(@product, pic), method: "delete", data:{ confirm: "Are you sure?"} %></td>
-      </tr>
-    <% end %>
+  <%= simple_form_for @product_picture, url: product_manage_product_pictures_path do |f| %>
+    <%= f.hidden_field :product_id, :value => @product.id  %>
+    <%= f.input :file, label: "圖片：" %>
+    <%= f.submit %>
   <% end %>
-</table>
+
+  <table>
+    <tr>
+      <th>Picture</th>
+      <th></th>
+    </tr>
+    <% if @product.product_pictures.size != 0 %>
+      <% @product.product_pictures.each do |pic| %>
+        <tr>
+          <td><%= image_tag pic.file.medium.url %></td>
+          <% if current_user and current_user.is_admin? %>
+            <td>
+              <%= link_to (pic.is_banner) ? "取消輪播" : "輪播", product_manage_product_picture_path(@product, pic), method: "put" %>
+              <%= link_to "delete", product_manage_product_picture_path(@product, pic), method: "delete", data:{ confirm: "Are you sure?"} %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+<% else %>
+  <h1>No Permissions</h1>
+  <%= link_to  "back", "/", class: "btn btn-default" %>
+<% end %>

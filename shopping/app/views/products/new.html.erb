@@ -1,7 +1,11 @@
-<div class="col-md-12">
-  <%= link_to("back", products_path, class: "btn btn-default float-right") %>
-  <h1>新增產品</h1>
-
-  <hr>
-  <%= render  "form", product: @product %>
-</div>
+<% if current_user and current_user.is_admin %>
+  <div class="col-md-12">
+    <h1>新增產品 <%= link_to("back", product_manages_path, class: "btn btn-default float-right") %></h1>
+    
+    <hr>
+    <%= render  "form", product: @product %>
+  </div>
+<% else %>
+  <h1>No Permissions</h1>
+  <%= link_to  "back", "/", class: "btn btn-default" %>
+<% end %>

@@ -1,11 +1,19 @@
-<nav class="navbar navbar-light bg-faded" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">Shppping</a>
-    </div>
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li> <%= link_to("登入", '#') %> </li>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Little JJ</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+        <% if !current_user %>
+          <li> <%= link_to("登入", new_user_session_path) %> </li>
+        <% else %>
+          <li> <%= link_to  "Hi!, #{current_user.nickname}", user_manage_path(current_user) %></li>
+          <li> <%= link_to  "<span class='glyphicon glyphicon-shopping-cart'/>".html_safe, shopping_carts_path %></li>
+          <li> <%= link_to "後台管理", user_manages_path %> </li>
+          <li> <%= link_to "修改資料", edit_user_registration_path(current_user) %> </li>
+          <li> <%= link_to("登出", destroy_user_session_path, method: :delete) %> </li>
+        <% end %>
       </ul>
     </div>
   </div>

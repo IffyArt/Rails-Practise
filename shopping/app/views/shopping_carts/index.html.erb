@@ -1,0 +1,35 @@
+<h1>ShoppingCart List</h1>
+<table class="table table-hover">
+  <tr>
+    <th>Product</th>
+    <th>Price</th>
+    <th>Amount</th>
+    <th>Total</th>
+    <th></th>
+  </tr>
+  <% current_user.shopping_carts.each do |cart| %>
+  <tr>
+    <td><%= link_to  cart.product.name, product_path(cart.product) %></td>
+    <td><%= cart.product.price %></td>
+    <td>
+      <%= form_for cart, url: shopping_cart_product_path(id: cart.product.id, redirect_path: "shopping_cart"), method: "post" do |f| %>
+        <%= link_to  "-", shopping_cart_product_path(id: cart.product.id, shopping_cart: {amount: cart.amount - 1}, redirect_path: "shopping_cart"), method: "post", class: "btn btn-default" %>
+        <%= f.text_field :amount %>
+        <%= link_to  "+", shopping_cart_product_path(id: cart.product.id, shopping_cart: {amount: cart.amount + 1}, redirect_path: "shopping_cart"), method: "post", class: "btn btn-default" %>
+      <% end %>
+    </td>
+    <td><%= cart.product.price * cart.amount %></td>
+    <td>
+      <%= link_to "刪除", shopping_cart_path(cart), method: "delete", data:{ confirm: "Are you sure?"} %>
+    </td>
+  </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>總計： <%= current_user.shopping_carts.map{|val| val.product.price * val.amount }.sum %></td>
+    <td></td>
+  </tr>
+</table>
+<%= link_to  "生成訂單", shopping_carts_path, method: "post", class: "btn btn-success" %>

@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]  
+  before_action :find_product, only: [:edit, :update, :destroy, :shopping_cart]
   before_action :product_kind, only: [:new, :create, :edit, :update]
-  before_action :find_product, only: [:edit, :update, :destroy]
 
   def index
     @products = Product.all
@@ -12,12 +13,9 @@ class ProductsController < ApplicationController
   
   def create
     @product = Product.new(product_params)
-    puts "\n\nKind: #{params.require(:product)}\n"
-    puts "\n\nKind: #{@product.kind_id}\n"
     if @product.save
-      redirect_to products_path
+      redirect_to product_manages_path
     else
-      puts "\n\nError: #{@product.errors.full_messages}\n"
       render :new
     end
   end
@@ -27,7 +25,7 @@ class ProductsController < ApplicationController
   
   def update
     if @product.update(product_params)
-      redirect_to products_path
+      redirect_to product_manages_path
     else
       render :edit
     end
@@ -35,15 +33,34 @@ class ProductsController < ApplicationController
   
   def show
     @product = Product.includes(:product_pictures).find_by(id: params[:id])
+    @shopping_cart = (current_user.shopping_carts.exists?(product_id: params[:id]))? current_user.shopping_carts.find_by(product_id: params[:id]) : ShoppingCart.new(amount: 1)
   end
   
-  def destroy
-    @product.destroy if @product
-    FileUtils.remove_dir("#{Rails.root}/public/uploads/product/#{@product.id}", :force => true)
-    redirect_to products_path
+  def shopping_cart
+    if params.key? :shopping_cart
+      amount = params.require(:shopping_cart).permit(:amount)["amount"]
+      if amount.to_i > @product.amount
+        redirect_to (params.require(:redirect_path).include? "product")? product_path(@product) : shopping_carts_path, alert: "數量不可大於庫存"
+      else
+        shopping_cart_save amount, true
+        redirect_to shopping_carts_path
+      end
+    else
+      shopping_cart_save 1, false
+      redirect_to products_path, alert: "產品已在購物車內！"
+    end
   end
-  
+
   private
+  def shopping_cart_save amount, update_available
+    if !current_user.shopping_carts.exists?(product_id: params[:id])
+      shopping_cart = current_user.shopping_carts.new(product_id: @product.id, amount: amount)
+      shopping_cart.save
+    else
+      current_user.shopping_carts.find_by(product_id: params[:id]).update(amount: amount) if update_available
+    end
+  end
+
   def product_kind
     @kinds = Kind.all
   end

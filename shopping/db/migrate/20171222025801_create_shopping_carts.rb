@@ -4,7 +4,6 @@ class CreateShoppingCarts < ActiveRecord::Migration[5.1]
       t.references :product, foreign_key: true
       t.references :user, foreign_key: true
       t.integer :amount
-      t.float :price
 
       t.timestamps
     end
