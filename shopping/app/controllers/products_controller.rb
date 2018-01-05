@@ -37,26 +37,28 @@ class ProductsController < ApplicationController
   end
   
   def shopping_cart
+    exist = current_user.shopping_carts.exists?(product_id: params[:id])
+    cart_amount = (exist)? current_user.shopping_carts.find_by(product_id: params[:id]).amount : 0
+    amount = (params.key? :shopping_cart)? params.require(:shopping_cart).permit(:amount)["amount"].to_i : cart_amount + 1
+    
+    # 如果加到購物車的商品數量大於庫存，跳錯誤訊息
+    redirect_to (params.require(:redirect_path).include? "product")? product_path(@product) : shopping_carts_path, alert: "數量不可大於庫存" if amount - cart_amount > @product.amount
+    shopping_cart_save amount, cart_amount, true, exist
     if params.key? :shopping_cart
-      amount = params.require(:shopping_cart).permit(:amount)["amount"]
-      if amount.to_i > @product.amount
-        redirect_to (params.require(:redirect_path).include? "product")? product_path(@product) : shopping_carts_path, alert: "數量不可大於庫存"
-      else
-        shopping_cart_save amount, true
-        redirect_to shopping_carts_path
-      end
+      redirect_to shopping_carts_path
     else
-      shopping_cart_save 1, false
-      redirect_to products_path, alert: "產品已在購物車內！"
+      redirect_to products_path
     end
   end
 
   private
-  def shopping_cart_save amount, update_available
-    if !current_user.shopping_carts.exists?(product_id: params[:id])
+  def shopping_cart_save amount, cart_amount, update_available, product_exist
+    if !product_exist
+      @product.update(amount: @product.amount - amount)
       shopping_cart = current_user.shopping_carts.new(product_id: @product.id, amount: amount)
       shopping_cart.save
     else
+      @product.update(amount: @product.amount + (cart_amount - amount))
       current_user.shopping_carts.find_by(product_id: params[:id]).update(amount: amount) if update_available
     end
   end
@@ -70,6 +72,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :price, :discounted, :discounted_start_date, :discounted_end_date, :amount, :description, :content, :kind_id, :image)
+    params.require(:product).permit(:name, :price, :amount, :description, :content, :kind_id, :image)
   end
 end

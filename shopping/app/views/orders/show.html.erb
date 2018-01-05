@@ -1,0 +1,40 @@
+<h1><%= @order.order_details.first.product.name %> <%= link_to  "back", orders_path, class: "btn btn-default" %></h1>
+
+<h3><%= (@order.address != nil and @order.address != "")? "收件地址：#{@order.address}" : "收件地址：尚未填寫" %></h3>
+<table class="table table-hover">
+  <tr>
+    <th></th>
+    <th>產品名稱</th>
+    <th>單價</th>
+    <th>數量</th>
+    <th>金額</th>
+  </tr>
+  <% @order.order_details.each do |detail| %>
+    <tr>
+      <td><%= image_tag detail.product.image %></td>
+      <td><%= link_to detail.product.name, product_path(detail.product) %></td>
+      <td><%= detail.price %></td>
+      <td><%= detail.amount %></td>
+      <td><%= detail.price * detail.amount %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>總金額：</td>
+    <td><%= @order.order_details.map{|detail| detail.price * detail.amount }.sum %></td>
+  </tr>
+</table>
+
+<% if !@order.is_send %>
+  <hr>
+  <h4><strong><em>付款資訊：</em></strong></h4>
+  <%= simple_form_for @order do |f| %>
+    <%= f.check_box :is_pay, checked: true, hidden: true %>
+    <%= f.input :address, label: "收件地址" %>
+    <%= f.input :memo, label: "備註" %>
+    <%= f.submit %>
+  <% end %>
+<% end %>
+

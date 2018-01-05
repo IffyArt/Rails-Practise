@@ -9,7 +9,7 @@
   </tr>
   <% current_user.shopping_carts.each do |cart| %>
   <tr>
-    <td><%= link_to  cart.product.name, product_path(cart.product) %></td>
+    <td><%= link_to  cart.product.name, product_path(cart.product), data: { turbolinks: false } %></td>
     <td><%= cart.product.price %></td>
     <td>
       <%= form_for cart, url: shopping_cart_product_path(id: cart.product.id, redirect_path: "shopping_cart"), method: "post" do |f| %>

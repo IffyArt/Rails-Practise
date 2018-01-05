@@ -9,11 +9,6 @@
     <% end %>
     <%= f.input :price, label: "價格", input_html: { class: "form-control"}%>
     <%= f.input :amount, label: "剩餘數量", input_html: { class: "form-control"} %>
-    <%= f.input :discounted, label: "折扣(%)<em>(輸入1～100)</em>".html_safe, input_html: { class: "form-control"} %>
-    <label class="date optional" for="discounted_start_date">折扣起始日</label>
-    <%= f.date_field :discounted_start_date, label: "折扣起始日", class: "form-control" %>
-    <label class="date optional" for="discounted_end_date">折扣結束日</label>
-    <%= f.date_field :discounted_end_date, class: "form-control" %>
     <%= f.input :description, label: "商品簡介 - 200字內", input_html: { class: "form-control"} %>
     <%= f.input :content, label: "商品介紹", input_html: { class: "form-control"} %>
 

@@ -1,14 +1,6 @@
 <h1><%= @product.name %></h1>
 <%= image_tag @product.image.medium.url %>
-<p>
-    price:
-  <% if @product.discounted and @product.discounted_start_date < Time.now and @product.discounted_end_date > Time.now %>
-    $<%= Integer(@product.price*(@product.discounted/100)) %>&nbsp;<del>$<%= Integer(@product.price) %></del><br>
-    Discounted: <%= Integer(100-@product.discounted) %>% off
-  <% else %>
-    <%= Integer(@product.price) %>
-  <% end %>
-</p>
+<p>price:<%= Integer(@product.price) %></p>
 <p>
   Introduction:<br>
   <%= simple_format(@product.content) %>
@@ -26,7 +18,9 @@
 
 <%= form_for @shopping_cart, url: shopping_cart_product_path(redirect_path: "product_path"), method: "post" do |f| %>
   <%= f.label :amount, "數量：" %>
-  <%= f.number_field :amount, input_html: { :value => @shopping_cart.amount, :amount_max => @product.amount } %>
+  <%= button_tag "-", value: "-1", class: "btn btn-default amount_button" %>
+  <%= f.number_field :amount, input_html: { :value => @shopping_cart.amount } %>
+  <%= button_tag "+", value: "1", class: "btn btn-default amount_button" %>
   <%= f.submit "加入購物車", class: "btn btn-warning"%>
 <% end %>
 

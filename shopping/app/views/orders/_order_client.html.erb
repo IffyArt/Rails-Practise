@@ -1,0 +1,23 @@
+<table class="table table-hover">
+  <tr>
+    <th>出貨狀況</th>
+    <th>Description</th>
+    <th>Address</th>
+    <th>建立時間</th>
+    <th>備註</th>
+    <th></th>
+  </tr>
+  <% orders.each do |order| %>
+    <tr>
+      <td><%= (order.is_send)? "已出貨" : "尚未出貨" %></td>
+      <td><%= link_to  order.order_details.first.product.name, order_path(order) %></td>
+      <td><%= (order.address == nil or order.address == "")? "未填寫收件地址" : order.address %></td>
+      <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%= order.memo %></td>
+      <td>
+        <%= link_to  "付款", order_path(order), class: "btn btn-default" if !order.is_pay %>
+        <%= link_to  "取消訂單", order_path(order), method: "delete", class: "btn btn-danger" if !order.is_pay %>
+      </td>
+    </tr>
+  <% end %>
+</table>

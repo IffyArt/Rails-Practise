@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
   end
   resources :shopping_carts, only: [:index, :destroy, :create]
-  resources :orders, except: [:new, :create]
+  resources :orders, except: [:new, :create, :edit]
 
   root to: 'products#index'
 end

@@ -14,7 +14,7 @@
         <tr>
           <td><%= image_tag product.image.small.url %></td>
           <td>
-            <%= link_to(product.name, product_path(product)) %>
+            <%= link_to product.name, product_path(product), data: { turbolinks: false } %>
           </td>
           <td>
             <%= product.description %>

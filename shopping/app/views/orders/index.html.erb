@@ -1,41 +1,5 @@
 <% if current_user and current_user.is_admin? %>
-  <table class="table table-hover">
-    <tr>
-      <th>訂單狀態</th>
-      <th>商品描述</th>
-      <th>Address</th>
-      <th>買家</th>
-      <th>下單時間</th>
-      <th>備註</th>
-    </tr>
-    <% @orders.each do |order| %>
-      <tr>
-        <td><%= (order.is_pay)? "已付款" : "尚未付款" %></td>
-        <td><%= order.order_details.first.product.name %></td>
-        <td><%= (order.address == nil)? "未填寫收件地址" : order.address %></td>
-        <td><%= link_to "#{order.user.nickname}(#{order.user.credit_score})", user_manage_path(order.user) %></td>
-        <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-        <td><%= order.memo %></td>
-      </tr>
-    <% end %>
-  </table>
+  <%= render  "order_manage", orders: @orders %>
 <% else %>
-    <table class="table table-hover">
-      <tr>
-        <th>出貨狀況</th>
-        <th>Description</th>
-        <th>Address</th>
-        <th>建立時間</th>
-        <th>備註</th>
-      </tr>
-      <% current_user.orders.each do |order| %>
-        <tr>
-          <td><%= (order.is_send)? "已出貨" : "尚未出貨" %></td>
-          <td><%= order.order_details.first.product.name %></td>
-          <td><%= (order.address == nil)? "未填寫收件地址" : order.address %></td>
-          <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-          <td><%= order.memo %></td>
-        </tr>
-      <% end %>
-    </table>
+  <%= render  "order_client", orders: current_user.orders %>
 <% end %>

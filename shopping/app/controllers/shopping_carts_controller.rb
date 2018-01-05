@@ -10,6 +10,8 @@ class ShoppingCartsController < ApplicationController
   end
 
   def destroy
+    shopping_cart = current_user.shopping_carts.find_by(id: params[:id])
+    shopping_cart.product.update(amount: shopping_cart.product.amount + shopping_cart.amount)
     current_user.shopping_carts.find_by(id: params[:id]).destroy
     redirect_to shopping_carts_path
   end
