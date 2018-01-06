@@ -1,6 +1,12 @@
 <h1><%= @order.order_details.first.product.name %> <%= link_to  "back", orders_path, class: "btn btn-default" %></h1>
-
-<h3><%= (@order.address != nil and @order.address != "")? "收件地址：#{@order.address}" : "收件地址：尚未填寫" %></h3>
+<% if current_user and current_user.is_admin and @order.is_send and @order.rating == nil %>
+  <%= form_for @order, url: order_path do |f| %>
+  <%= f.label :rating, "評分：" %>
+  <%= select(:order, :rating, options_for_select([[1, 1], [2, 2], [3, 3], [4, 4], [5, 5]], :selected => 5)) %>
+  <%= f.submit "送出" %>
+  <% end %>
+<% end %>
+<br>
 <table class="table table-hover">
   <tr>
     <th></th>
@@ -27,11 +33,49 @@
   </tr>
 </table>
 
-<% if !@order.is_send %>
+<% if current_user.is_admin %>
+  <table class="table table-hover">
+    <tr>
+      <th colspan="2">
+        訂單付款資訊
+      </th>
+    </tr>
+    <tr>
+      <th>銀行：</th>
+      <td><%= (@order.bank == nil or @order.bank == "")? "未填寫" : @order.bank %></td>
+    </tr>
+    <tr>
+      <th>銀行代碼：</th>
+      <td><%= (@order.bank_num == nil or @order.bank_num == "")? "未填寫" : @order.bank_num %></td>
+    </tr>
+    <tr>
+      <th>戶名：</th>
+      <td><%= (@order.account_name == nil or @order.account_name == "")? "未填寫" : @order.account_name %></td>
+    </tr>
+    <tr>
+      <th>帳號：</th>
+      <td><%= (@order.account == nil or @order.account == "")? "未填寫" : @order.account %></td>
+    </tr>
+    <tr>
+      <th>收件地址：</th>
+      <td><%= (@order.address == nil or @order.address == "")? "未填寫" : @order.address %></td>
+    </tr>
+    <tr>
+      <th>備註：</th>
+      <td><%= (@order.memo == nil or @order.memo == "")? "未填寫" : @order.memo %></td>
+    </tr>
+  </table>
+<% end %>
+
+<% if !@order.is_send and @order.user.id == current_user.id %>
   <hr>
   <h4><strong><em>付款資訊：</em></strong></h4>
   <%= simple_form_for @order do |f| %>
     <%= f.check_box :is_pay, checked: true, hidden: true %>
+    <%= f.input :bank, label: "銀行：<em>(ex.銀行名稱-xx分行)</em>".html_safe %>
+    <%= f.input :bank_num, label: "銀行代碼：" %>
+    <%= f.input :account_name, label: "戶名：" %>
+    <%= f.input :account, label: "帳號：" %>
     <%= f.input :address, label: "收件地址" %>
     <%= f.input :memo, label: "備註" %>
     <%= f.submit %>

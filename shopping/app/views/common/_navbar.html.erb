@@ -11,7 +11,6 @@
           <li> <%= link_to  "Hi!, #{current_user.nickname}", user_manage_path(current_user) %></li>
           <li> <%= link_to  "<span class='glyphicon glyphicon-shopping-cart'/>".html_safe, shopping_carts_path %></li>
           <li> <%= link_to "後台管理", user_manages_path %> </li>
-          <li> <%= link_to "修改資料", edit_user_registration_path(current_user) %> </li>
           <li> <%= link_to("登出", destroy_user_session_path, method: :delete) %> </li>
         <% end %>
       </ul>

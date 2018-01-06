@@ -1,4 +1,5 @@
 class KindsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_kind, except: [:index, :new, :create]
 
   def index

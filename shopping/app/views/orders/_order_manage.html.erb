@@ -1,6 +1,8 @@
 <table class="table table-hover">
   <tr>
     <th>訂單狀態</th>
+    <th>出貨狀況</th>
+    <th>評分</th>
     <th>商品描述</th>
     <th>Address</th>
     <th>買家</th>
@@ -11,14 +13,19 @@
   <% orders.each do |order| %>
     <tr>
       <td><%= (order.is_pay)? "已付款" : "尚未付款" %></td>
+      <td><%= (order.is_send)? "已出貨" : "尚未出貨" %></td>
+      <td><%= (order.rating == nil)? "未評分" : order.rating %></td>
       <td><%= order.order_details.first.product.name %></td>
       <td><%= (order.address == nil)? "未填寫收件地址" : order.address %></td>
-      <td><%= link_to "#{order.user.nickname}(#{order.user.credit_score})", user_manage_path(order.user) %></td>
+      <td><%= link_to "#{order.user.nickname}(#{(order.user.rating_count == 0)? "第一次下單" : order.user.rating})", user_manage_path(order.user) %></td>
       <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%= order.memo %></td>
       <td>
+        <%= link_to  "詳細", order_path(order), class: "btn btn-default" %>
+        <%= link_to  "付款", order_path(order), class: "btn btn-default" if !order.is_pay and order.user.id == current_user.id %>
+        <%= link_to  "取消訂單", order_path(order), method: "delete", class: "btn btn-danger" if !order.is_pay and order.user.id == current_user.id %>
         <%= (link_to  "出貨", order_path(order), method: "patch", data:{confirm: "再次確認商品是否已出貨"}, class: "btn btn-success") if order.is_pay and !order.is_send %>
-        <%= link_to  "評分", "#", class: "btn btn-warning" if order.is_send %>
+        <%= link_to  "評分", order_path(order), class: "btn btn-warning" if order.is_send and order.rating == nil %>
       </td>
     </tr>
   <% end %>

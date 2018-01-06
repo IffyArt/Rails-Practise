@@ -15,7 +15,7 @@
       <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%= order.memo %></td>
       <td>
-        <%= link_to  "付款", order_path(order), class: "btn btn-default" if !order.is_pay %>
+        <%= link_to (order.is_pay)? "編輯" : "付款", order_path(order), class: "btn btn-default" if !order.is_send %>
         <%= link_to  "取消訂單", order_path(order), method: "delete", class: "btn btn-danger" if !order.is_pay %>
       </td>
     </tr>

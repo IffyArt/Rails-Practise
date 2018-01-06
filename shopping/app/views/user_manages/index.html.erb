@@ -15,7 +15,7 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= link_to  "#{user.name}(#{user.nickname})", user_manage_path(user) %></td>
-      <td><%= user.credit_score %></td>
+      <td><%= user.rating %></td>
       <td><%= user.phone %></td>
       <td><%= user.phone_memo %></td>
     </tr>
