@@ -17,7 +17,8 @@
       <td><%= order.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%= order.memo %></td>
       <td>
-        <%= (link_to  "出貨", "#", class: "btn btn-success") if order.is_pay %>
+        <%= (link_to  "出貨", order_path(order), method: "patch", data:{confirm: "再次確認商品是否已出貨"}, class: "btn btn-success") if order.is_pay and !order.is_send %>
+        <%= link_to  "評分", "#", class: "btn btn-warning" if order.is_send %>
       </td>
     </tr>
   <% end %>
