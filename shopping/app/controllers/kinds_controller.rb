@@ -35,6 +35,12 @@ class KindsController < ApplicationController
     redirect_to kinds_path  
   end
 
+  def product
+    @products = (params[:id].to_i == 1)? Product.all : Product.where(kind_id: params[:id])
+    @kinds = Kind.all
+    render template:  "products/index.html.erb"
+  end
+
   private
   def find_kind
     @kind = Kind.find_by(id: params[:id])

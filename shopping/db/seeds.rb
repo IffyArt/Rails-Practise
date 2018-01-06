@@ -7,3 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Kind.create name: "未分類"
+User.create email: "admin@gmail.com", password: "123123", password_confirmation: "123123", name: "張CC", nickname: "張CC", phone: "test", phone_memo: "test", is_admin: true
