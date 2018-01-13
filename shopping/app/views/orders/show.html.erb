@@ -7,7 +7,7 @@
   <% end %>
 <% end %>
 <br>
-<table class="table table-hover">
+<table class="table table-hover orderTable">
   <tr>
     <th></th>
     <th>產品名稱</th>
@@ -17,7 +17,7 @@
   </tr>
   <% @order.order_details.each do |detail| %>
     <tr>
-      <td><%= image_tag detail.product.image %></td>
+      <td width="20%"><%= image_tag detail.product.image %></td>
       <td><%= link_to detail.product.name, product_path(detail.product) %></td>
       <td><%= detail.price %></td>
       <td><%= detail.amount %></td>

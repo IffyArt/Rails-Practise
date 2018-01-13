@@ -1,18 +1,11 @@
 <h2>編輯個人資料</h2>
 
-<%= simple_form_for resource, as: resource_name, url: registration_path(resource_name) do |f| %>
+<%= simple_form_for resource, as: resource_name, url: "/user_manage" do |f| %>
   <%= f.input :email, label: "帳號(Email)", autofocus: true %>
-  <% if @minimum_password_length %>
-    <%= f.input :password, label: "密碼<em>(#{@minimum_password_length} characters minimum)</em>".html_safe, autocomplete: "off" %>
-  <% else %>
-    <%= f.input :password, label: "密碼", autocomplete: "off" %>
-  <% end %>
-  <%= f.input :password_confirmation, label: "Password Confirmation", autocomplete: "off" %>
   <%= f.input :name, label: "姓名" %>
   <%= f.input :nickname, label: "暱稱" %>
   <%= f.input :phone, label: "聯絡電話" %>
   <%= f.input :phone_memo, label: "方便聯絡時間" %>
-
   <%= f.submit %>
 <% end %>
 

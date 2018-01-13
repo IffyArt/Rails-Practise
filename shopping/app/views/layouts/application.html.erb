@@ -2,17 +2,20 @@
 <html>
   <head>
     <title>Shopping</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div class="container-fluid">
-      <%= render  "common/navbar" %>
-      <div><%= notice_message %></div>
+    <header class="container-fluid"><%= render  "common/navbar" %></header>
+    <div class="noticeMessage"><%= notice_message %></div>
+    <aside class="container textMain">
       <%= yield %>
-    </div>
+    </aside>
+    <footer class="container modal-footer"><%= render  "common/footer" %></footer>
+
   </body>
 </html>

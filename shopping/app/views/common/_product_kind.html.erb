@@ -1,7 +1,3 @@
-<div class="collapse navbar-collapse">
-    <ul class="nav navbar-nav navbar-left">
-      <% kinds.each do |kind| %>
-        <li><%= link_to (kind.id == 1)? "全部" : kind.name, product_kind_path(kind) %></li>
-      <% end %>
-    </ul>
-</div>
+<% kinds.each do |kind| %>
+  <%= link_to (kind.id == 1)? "全部" : kind.name, product_kind_path(kind),class: "list-group-item" %>
+<% end %>

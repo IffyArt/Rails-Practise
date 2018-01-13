@@ -16,4 +16,9 @@ class UserManagesController < ApplicationController
       @user = current_user
     end
   end
+
+  def update
+    current_user.update(params.require(:user).permit(:email, :name, :nickname, :phone, :phone_memo))
+    redirect_to user_manage_path(current_user)
+  end
 end

@@ -5,7 +5,14 @@
 $(() ->
   $(".amount_button").click (e) ->
     amount = $('#shopping_cart_amount')
-    amount.val(parseInt(amount.val()) + parseInt(e.target.value))
+    num = parseInt(amount.val()) + parseInt(e.target.value)
+    max_num = $('#amount').val()
+    if num < 0
+      amount.val(0)
+    else if num > max_num
+      amount.val(max_num)
+    else
+      amount.val(num)
     e.preventDefault()
     return false
 )

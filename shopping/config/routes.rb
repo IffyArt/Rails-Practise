@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'common/index'
+
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :product_manages, only: [:index, :destroy] do
@@ -10,6 +12,7 @@ Rails.application.routes.draw do
     end
   end
   resources :user_manages, only: [:index, :show]
+  resource :user_manage, only: [:update]
   resources :products, only: [:index, :show, :edit, :update, :new, :create] do
     member do
       post :shopping_cart
@@ -17,5 +20,5 @@ Rails.application.routes.draw do
   end
   resources :shopping_carts, only: [:index, :destroy, :create]
   resources :orders, except: [:new, :create, :edit]
-  root to: 'products#index'
+  root to: 'common#index'
 end

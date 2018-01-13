@@ -1,8 +1,9 @@
 <div class="col-md-12">
-  <div class="group" align="right">
+  <div class="noticeMessage" >
     <% if current_user and current_user.is_admin %>
       <%= link_to("Product Kinds Manage", kinds_path, class: "btn btn-primary") %>
       <%= link_to("New product", new_product_path, class: "btn btn-primary") %>
+      <%= link_to("back", user_manages_path, class: "btn btn-default float-right") %>
     <% end %>
   </div>
   <h1>Product List</h1>
@@ -10,23 +11,31 @@
     <thead>
       <tr>
         <td>#</td>
-        <td>Name</td>
-        <td>Description</td>
+        <td width="20%">Name</td>
+        <td>剩餘數量</td>
+        <td>產品類別</td>
         <td></td>
       </tr>
     </thead>
     <tbody>
       <% @products.each do |product| %>
         <tr>
-          <td><%= image_tag product.image.small.url %></td>
+          <td>
+            <% if product.image.url != nil %>
+              <%= image_tag product.image.small.url %>
+            <% end %>
+          </td>
           <td>
             <%= link_to(product.name, product_path(product)) %>
           </td>
           <td>
-            <%= product.description %>
+            <%= product.amount %>
           </td>
           <td>
-            
+            <%= product.kind_id %>
+          </td>
+          <td>
+
             <% if current_user and current_user.is_admin %>
               <%= link_to("新增圖片", new_product_manage_product_picture_path(product), class: "btn btn-sm btn-default")%>
               <%= link_to("修改產品", edit_product_path(product), class: "btn btn-sm btn-default")%>

@@ -1,9 +1,30 @@
-<h2>姓名： <%= @user.name %></h2>
-<h2>暱稱： <%= @user.nickname %></h2>
-<h2>信箱： <%= @user.email %></h2>
-<h2>評分： <%= @user.rating %></h2>
-<h2>聯絡電話： <%= @user.phone %></h2>
-<h2>方便聯絡時間： <%= @user.phone_memo %></h2>
+<section class="row banner  text-center">
+    <h1>會員管理</h1>
+</section>
+<div class="memberCard">
 
-<%= link_to  "訂單管理", orders_path, class: "btn btn-default"%>
-<%= link_to  "back",  :back, class: "btn btn-default"%>
+    <h2>姓名：
+        <%= @user.name %>
+    </h2>
+    <h2>暱稱：
+        <%= @user.nickname %>
+    </h2>
+    <h2>信箱：
+        <%= @user.email %>
+    </h2>
+    <h2>評分：
+        <%= @user.rating %>
+    </h2>
+    <h2>聯絡電話：
+        <%= @user.phone %>
+    </h2>
+    <h2>方便聯絡時間：
+        <%= @user.phone_memo %>
+    </h2>
+    <div class="buttonList">
+        <%= link_to  "訂單管理", orders_path, class: "btn btn-default"%>
+        <%= link_to  "資料修改", edit_user_registration_path , class: "btn btn-default"%>
+        <%= link_to  "back",  :back, class: "btn btn-default"%>
+    </div>
+</div>
+

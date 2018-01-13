@@ -1,4 +1,6 @@
 class ShoppingCartsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
   end
 
@@ -6,7 +8,7 @@ class ShoppingCartsController < ApplicationController
     order = current_user.orders.create
     current_user.shopping_carts.map{|val| OrderDetail.create(order_id: order.id, product_id: val.product.id, amount: val.amount, price: val.product.price)}
     current_user.shopping_carts.destroy_all
-    redirect_to shopping_carts_path
+    redirect_to shopping_carts_path, notice: "訂單成立"
   end
 
   def destroy
