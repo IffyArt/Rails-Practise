@@ -1,28 +1,55 @@
 
-<h1><%= @product.name %></h1>
-<%= image_tag @product.image.medium.url %>
-<p>price:<%= Integer(@product.price) %></p>
-<p>
-  Introduction:<br>
-  <%= simple_format(@product.content) %>
-</p>
-<hr>
-<%= text_field_tag 'amount', @product.amount, hidden: true %>
-<p>
-  <h3>Pictures：</h3>
-  <% if @product.product_pictures.size != 0 %>
-    <% @product.product_pictures.each do |pic| %>
-      <%= image_tag pic.file.medium.url %>
-    <% end %>
-  <% end %>
-</p>
+<section class="row productsShow">
+  <div class="col-xs-12  col-md-3" style="margin-top:2em;">
+    <div class="list-group">
+      <%= render  "common/product_kind", kinds: all_kinds %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-9">
 
-<%= form_for @shopping_cart, url: shopping_cart_product_path, method: "post" do |f| %>
-  <%= f.label :amount, "數量：" %>
-  <%= button_tag "-", value: "-1", class: "btn btn-default amount_button" %>
-  <%= f.number_field :amount, input_html: { :value => @shopping_cart.amount } %>
-  <%= button_tag "+", value: "1", class: "btn btn-default amount_button" %>
-  <%= f.submit "加入購物車", class: "btn btn-warning"%>
-<% end %>
-
-<%= link_to  "Back", products_path, class: "btn btn-default" %>
+    <h1><%= @product.name %></h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <%= image_tag @product.image.medium.url %>
+        </div>
+        <div class="col-md-6">
+            <div>
+                價錢：
+                <%= Integer(@product.price) %>
+            </div>
+            <div>
+                剩餘數量：
+                <%= Integer(@product.amount) %>
+            </div>
+            <div>
+            <%= form_for @shopping_cart, url: shopping_cart_product_path, method: "post" do |f| %>
+              <%= f.label :amount, "數量：" %>
+              <%= button_tag "-", value: "-1", class: "btn btn-default amount_button" %>
+              <%= f.number_field :amount, input_html: { :value => @shopping_cart.amount } %>
+              <%= button_tag "+", value: "1", class: "btn btn-default amount_button" %>
+              <hr>
+              <%= f.submit "加入購物車", class: "btn btn-warning"%>
+            <% end %>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <h3>產品介紹:</h3>
+            <hr>
+            <p>
+              <%= simple_format(@product.content) %>
+            </p>
+            <p>
+              <h3>產品圖片</h3>
+              <% if @product.product_pictures.size != 0 %>
+                <% @product.product_pictures.each do |pic| %>
+                  <%= image_tag pic.file.medium.url %>
+                <% end %>
+              <% end %>
+            </p>
+            <%= text_field_tag 'amount', @product.amount, hidden: true %>
+        </div>
+      </div>
+    <%= link_to  "Back", products_path, class: "btn btn-default" %>
+  </div>
+</section>

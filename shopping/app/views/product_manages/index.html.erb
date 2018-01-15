@@ -32,10 +32,9 @@
             <%= product.amount %>
           </td>
           <td>
-            <%= product.kind_id %>
+            <%= product.kind.name %>
           </td>
           <td>
-
             <% if current_user and current_user.is_admin %>
               <%= link_to("新增圖片", new_product_manage_product_picture_path(product), class: "btn btn-sm btn-default")%>
               <%= link_to("修改產品", edit_product_path(product), class: "btn btn-sm btn-default")%>

@@ -128,7 +128,78 @@ body{
 .carousel-caption >p{
     display: none;
 }
+
+.sharedLinks .field{
+    width: 100%;
+    display: block;
+    position: relative;
+    float: left;
+}
+
 }
 .orderTable img{
     width: 100%;
+}
+.productsShow .col-md-6 img{
+    width: 100%;
+}
+.productsShow .col-md-9 hr{
+    background-color: #b54d37;
+    height: 1px;
+
+}
+.productsShow .col-md-6 > div{
+    margin-top: 1em;
+    font-size: 1.2em;
+}
+.productsShow .col-md-6 > div .btn-warning{
+    text-align: right;
+    float: right;
+}
+
+.logInBox{
+    border-radius: 1.4em;
+    overflow: hidden;
+    background-color: #ffffff;
+    border: #903a26 solid 1px;
+    max-width: 600px;
+    text-align: center;
+    margin: auto;
+    margin-top: 2em;
+}
+.logInBox h2{
+    margin: 0px;
+    text-align: center;
+    padding: 0.5em;
+    background-color: #913925;
+    color: #FFFFFF;
+}
+.input-group {
+    margin: 1em;
+    font-size: 1.4em;
+}
+.new_user input[type=submit]{
+    background-color: #903a26;
+    color: #FFFFFF;
+    padding: 0.5em 3em;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+}
+.logInBox .links  {
+    margin-bottom: 2em;
+}
+.sharedLinks{
+    margin:1em;
+}
+.sharedLinks .field{
+    width: 30%;
+    display: block;
+    position: relative;
+    float: left;
+}
+.sharedLinks a{
+    float: right;
+    display: block;
+    position: relative;
+    margin-right: 0.6em;
 }

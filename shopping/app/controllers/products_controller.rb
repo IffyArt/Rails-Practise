@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.includes(:product_pictures).find_by(id: params[:id])
-    @shopping_cart = (current_user.shopping_carts.exists?(product_id: params[:id]))? current_user.shopping_carts.find_by(product_id: params[:id]) : ShoppingCart.new(amount: 1)
+    @shopping_cart = (current_user and current_user.shopping_carts.exists?(product_id: params[:id]))? current_user.shopping_carts.find_by(product_id: params[:id]) : ShoppingCart.new(amount: 1)
   end
 
   def shopping_cart
@@ -42,14 +42,17 @@ class ProductsController < ApplicationController
     cart_amount = (exist)? current_user.shopping_carts.find_by(product_id: params[:id]).amount : 0
     amount = (params.key? :shopping_cart)? params.require(:shopping_cart).permit(:amount)["amount"].to_i : cart_amount + 1
 
-    # 如果加到購物車的商品數量大於庫存，跳錯誤訊息
-
     if amount - cart_amount > @product.amount
       redirect_back fallback_location: root_path, alert: "數量不可大於庫存"
     else
       shopping_cart_save amount, cart_amount, true, exist
       redirect_back fallback_location: root_path
     end
+  end
+
+  def search
+    @products = Product.where("name LIKE ?", "%#{params.require(:product).permit(:name)['name']}%")
+    render template:  "products/index"
   end
 
   private

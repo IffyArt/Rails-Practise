@@ -39,7 +39,7 @@ class KindsController < ApplicationController
   def product
     @products = (params[:id].to_i == 1)? Product.where("amount > 0") : Product.where("amount > 0  and kind_id = '#{params[:id]}'")
     @kinds = Kind.all
-    render template:  "products/index.html.erb"
+    render template:  "products/index"
   end
 
   private

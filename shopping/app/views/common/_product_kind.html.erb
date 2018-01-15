@@ -1,3 +1,6 @@
+<a class="list-group-item active">
+  產品類別
+</a>
 <% kinds.each do |kind| %>
   <%= link_to (kind.id == 1)? "全部" : kind.name, product_kind_path(kind),class: "list-group-item" %>
 <% end %>

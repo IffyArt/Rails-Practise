@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'common/index'
 
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -20,5 +19,7 @@ Rails.application.routes.draw do
   end
   resources :shopping_carts, only: [:index, :destroy, :create]
   resources :orders, except: [:new, :create, :edit]
+
+  post "/search", to: "products#search"
   root to: 'common#index'
 end
